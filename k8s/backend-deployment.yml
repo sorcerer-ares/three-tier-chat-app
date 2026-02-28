@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+iiiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
@@ -20,6 +20,13 @@ spec:
       containers:
       - name: chatapp-backend
         image: vlawliet/chatapp-backend:latest 
+        resources:
+                    requests:
+                      memory: "256Mi"
+                      cpu: "250m"
+                    limits:
+                      memory: "512Mi"
+                      cpu: "500m"
         ports:
         - containerPort: 5001
         env:
