@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/sorcerer-ares/three-tier-chatApp.git
+    repoURL: https://github.com/sorcerer-ares/three-tier-chat-app.git
     targetRevision: main
     path: k8s
   destination:
