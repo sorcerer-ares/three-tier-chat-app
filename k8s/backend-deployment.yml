@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+iiiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       name: backend-pod
-      namespace: chat-app
+      namespace: chat-apppp
       labels:
         app: backend
     spec:
