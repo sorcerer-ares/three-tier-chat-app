@@ -1,3 +1,7 @@
+The root cause of the error is that the image "vlawliet/chatapp-backend:BROKEN-AI-TEST-123" does not exist in the Docker registry. 
+
+To fix the error, we need to ensure that the image exists in the registry or use a valid image. For demonstration purposes, let's assume we want to use the latest available image.
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,14 +23,14 @@ spec:
     spec:
       containers:
       - name: chatapp-backend
-        image: vlawliet/chatapp-backend:BROKEN-AI-TEST-123
+        image: vlawliet/chatapp-backend:latest
         resources:
-                    requests:
-                      memory: "256Mi"
-                      cpu: "250m"
-                    limits:
-                      memory: "512Mi"
-                      cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
         ports:
         - containerPort: 5001
         env:
@@ -37,4 +41,4 @@ spec:
         - name: MONGODB_URI
           value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
         - name: JWT_SECRET
-          value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"    
+          value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"
