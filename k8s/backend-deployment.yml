@@ -1,40 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+```yml
+apiVersion: v1
+kind: Pod
 metadata:
-  name: backend
+  name: backend-7cc6d99977-9vw8k
   namespace: chat-app
-  labels:
-    app: backend
 spec:
-  selector:
-    matchLabels:
-      app: backend
-  replicas: 1
-  template:
-    metadata:
-      name: backend-pod
-      namespace: chat-app
-      labels:
-        app: backend
-    spec:
-      containers:
-      - name: chatapp-backend
-        image: vlawliet/chatapp-backend:BROKEN-AI-TEST-123
-        resources:
-                    requests:
-                      memory: "256Mi"
-                      cpu: "250m"
-                    limits:
-                      memory: "512Mi"
-                      cpu: "500m"
-        ports:
-        - containerPort: 5001
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: PORT
-          value: "5001"
-        - name: MONGODB_URI
-          value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
-        - name: JWT_SECRET
-          value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"    
+  containers:
+  - name: backend
+    image: vlawliet/chatapp-backend:latest
+    imagePullPolicy: Always
+```
