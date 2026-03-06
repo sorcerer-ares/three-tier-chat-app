@@ -1,4 +1,4 @@
-iiiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
@@ -13,13 +13,13 @@ spec:
   template:
     metadata:
       name: backend-pod
-      namespace: chat-apppp
+      namespace: chat-app
       labels:
         app: backend
     spec:
       containers:
       - name: chatapp-backend
-        image: vlawliet/chatapp-backend:latest 
+        image: vlawliet/chatapp-backend:BROKEN-AI-TEST-123
         resources:
                     requests:
                       memory: "256Mi"
