@@ -1,3 +1,5 @@
+The root cause of the issue is that the Docker image 'vlawliet/chatapp-backend:BROKEN-AI-TEST-123' does not exist, resulting in an ImagePullBackOff error. To fix this issue, we need to update the image to a valid one. Assuming the correct image is 'vlawliet/chatapp-backend:latest', we can modify the YAML as follows:
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,14 +21,14 @@ spec:
     spec:
       containers:
       - name: chatapp-backend
-        image: vlawliet/chatapp-backend:BROKEN-AI-TEST-123
+        image: vlawliet/chatapp-backend:latest
         resources:
-                    requests:
-                      memory: "256Mi"
-                      cpu: "250m"
-                    limits:
-                      memory: "512Mi"
-                      cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
         ports:
         - containerPort: 5001
         env:
@@ -37,4 +39,4 @@ spec:
         - name: MONGODB_URI
           value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
         - name: JWT_SECRET
-          value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"    
+          value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"
