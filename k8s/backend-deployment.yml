@@ -20,6 +20,7 @@ spec:
       containers:
       - name: chatapp-backend
         image: vlawliet/chatapp-backend:latest
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             memory: "256Mi"
