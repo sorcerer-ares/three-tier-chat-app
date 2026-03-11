@@ -20,13 +20,15 @@ spec:
       containers:
       - name: chatapp-backend
         image: vlawliet/chatapp-backend:latest
+        command: ["/bin/sh", "-c"]
+        args: ["npm install && npm run start"]
         resources:
           requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
             memory: "512Mi"
             cpu: "500m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
         ports:
         - containerPort: 5001
         env:
@@ -38,3 +40,16 @@ spec:
           value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
         - name: JWT_SECRET
           value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 5001
+          initialDelaySeconds: 15
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 5001
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        restartPolicy: Always
