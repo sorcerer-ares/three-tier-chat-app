@@ -22,10 +22,10 @@ spec:
         image: vlawliet/chatapp-backend:latest
         resources:
           requests:
-            memory: "1Mi"
+            memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "1Mi"
+            memory: "1024Mi"
             cpu: "500m"
         ports:
         - containerPort: 5001
