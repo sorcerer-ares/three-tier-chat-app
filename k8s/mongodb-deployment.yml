@@ -25,8 +25,6 @@ spec:
   replicas: 1
   template:
     metadata:
-      name: mongo-pod
-      namespace: chat-app
       labels:
         app: mongodb
     spec:
@@ -46,3 +44,25 @@ spec:
       - name: mongo-data
         persistentVolumeClaim:
           claimName: mongodb-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /mnt/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - node1
