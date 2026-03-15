@@ -10,6 +10,7 @@ spec:
     matchLabels:
       app: frontend
   replicas: 1
+  revisionHistoryLimit: 2
   template:
     metadata:
       name: frontend-pod
