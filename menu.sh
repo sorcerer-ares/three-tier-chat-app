@@ -31,16 +31,20 @@ echo -e "\n================================================="
 echo " CHAOS INJECTION FOR: $TARGET_NAME"
 echo "================================================="
 echo "Select a failure scenario to inject:"
-echo "  1) 💥 Memory Starvation (Triggers OOMKilled)"
+echo "  1) 💥 Memory Starvation (Triggers OOMKilled - 1Mi Limit)"
 echo "  2) 🛑 Bad Image Tag (Triggers ImagePullBackOff)"
-echo "  3) 🚪 Cancel"
-read -p "Select scenario [1-3]: " chaos_choice
+echo "  3) 💽 Missing PVC (Deletes PVC file from Git) - MongoDB Only"
+echo "  4) 🚪 Cancel"
+read -p "Select scenario [1-4]: " chaos_choice
+
+# Set default git action to add the modified file
+GIT_ACTION="git add $FILE_PATH"
 
 case $chaos_choice in
     1)
-        echo -e "\n🔧 Sabotaging memory limits down to 5Mi in $FILE_PATH..."
-        # Replaces any memory limit with a guaranteed-to-crash 5Mi
-        sed -i 's/memory: .*/memory: "5Mi"/' $FILE_PATH
+        echo -e "\n🔧 Sabotaging memory limits down to 1Mi in $FILE_PATH..."
+        # Replaces any memory limit with a guaranteed-to-crash 1Mi
+        sed -i 's/memory: .*/memory: "1Mi"/' $FILE_PATH
         COMMIT_MSG="Chaos: Injecting OOMKilled into $TARGET_NAME"
         ;;
     2)
@@ -50,6 +54,16 @@ case $chaos_choice in
         COMMIT_MSG="Chaos: Injecting ImagePullBackOff into $TARGET_NAME"
         ;;
     3)
+        if [ "$TARGET_NAME" != "MongoDB" ]; then
+            echo -e "\n❌ Error: Missing PVC scenario is only applicable to MongoDB. Exiting."
+            exit 1
+        fi
+        echo -e "\n🔧 Sabotaging by completely deleting the PVC manifest from Git..."
+        # Overrides git action to delete the specific PVC file
+        GIT_ACTION="git rm k8s/mongodb-pvc.yml"
+        COMMIT_MSG="Chaos: Deleted MongoDB PVC to force AI infrastructure generation"
+        ;;
+    4)
         echo -e "\nExiting safely. No chaos injected."
         exit 0
         ;;
@@ -61,7 +75,7 @@ esac
 
 # --- STEP 3: EXECUTE ---
 echo -e "\n📦 Pushing broken configuration to GitHub..."
-git add $FILE_PATH
+$GIT_ACTION
 git commit -m "$COMMIT_MSG"
 git push origin $BRANCH
 
