@@ -60,7 +60,7 @@ case $chaos_choice in
         fi
         echo -e "\n 🔥 Wiping PVC definition from $FILE_PATH..."
         sed -i '/---/,$d' $FILE_PATH
-        kubectl delete pvc mongodb-pvc -n chat-app
+        kubectl delete pvc mongodb-pvc -n chat-app --wait=false 2>/dev/null
         echo -e "\n 🧹 Force-clearing existing PVC finalizers..."
         kubectl patch pvc mongodb-pvc -p '{"metadata":{"finalizers":null}}' -n chat-app --type=merge 2>/dev/null
         
