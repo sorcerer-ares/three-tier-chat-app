@@ -13,7 +13,6 @@ spec:
   template:
     metadata:
       name: mongo-pod
-      namespace: chat-app
       labels:
         app: mongodb
     spec:
@@ -33,3 +32,15 @@ spec:
       - name: mongo-data
         persistentVolumeClaim:
           claimName: mongodb-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+  namespace: chat-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
