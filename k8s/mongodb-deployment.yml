@@ -31,6 +31,9 @@ spec:
           value: secret
       volumes:
       - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongodb-pvc
+      
 
 
 
