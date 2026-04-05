@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: chatapp-frontend
-        image: vlawliet/chatapp-frontend:latest _BROKEN-DEMO
+        image: vlawliet/chatapp-frontend:latest
         imagePullPolicy: Always
         resources:
           requests:
@@ -31,7 +31,6 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 80
-        
         env:
         - name: NODE_ENV
           value: production
