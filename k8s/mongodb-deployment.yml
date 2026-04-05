@@ -1,12 +1,36 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: mongodb-pvc
+  name: mongodb
   namespace: chat-app
+  labels:
+    app: mongodb
 spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-
+  selector:
+    matchLabels:
+      app: mongodb
+  replicas: 1
+  template:
+    metadata:
+      name: mongo-pod
+      namespace: chat-app
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: chatapp-mongodb
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+        
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: mongoadmin
+      
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: secret
+      volumes:
+      - name: mongo-data
+        persistentVolumeClaim:
+          claimName: mongodb-pvc
+          apiVersion: v1
