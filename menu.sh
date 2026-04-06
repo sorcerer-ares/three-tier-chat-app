@@ -12,10 +12,10 @@ echo "================================================="
 echo " TARGET SELECTION"
 echo "================================================="
 echo "Which microservice would you like to sabotage?"
-echo "  1) 🌐 Frontend"
-echo "  2) ⚙️  Backend"
-echo "  3) 🗄️  MongoDB"
-echo "  4) 🚪 Exit"
+echo "  1) Frontend"
+echo "  2) Backend"
+echo "  3) MongoDB"
+echo "  4) Exit"
 read -p "Select target [1-4]: " target_choice
 
 case $target_choice in
@@ -23,7 +23,7 @@ case $target_choice in
     2) FILE_PATH="k8s/backend-deployment.yml"; TARGET_NAME="Backend" ;;
     3) FILE_PATH="k8s/mongodb-deployment.yml"; TARGET_NAME="MongoDB" ;;
     4) echo "Exiting safely."; exit 0 ;;
-    *) echo "❌ Invalid option. Exiting."; exit 1 ;;
+    *) echo "Invalid option. Exiting."; exit 1 ;;
 esac
 
 # --- STEP 2: SELECT CHAOS ---
@@ -31,10 +31,10 @@ echo -e "\n================================================="
 echo " CHAOS INJECTION FOR: $TARGET_NAME"
 echo "================================================="
 echo "Select a failure scenario to inject:"
-echo "  1) 💥 Memory Starvation (Triggers OOMKilled - 1Mi Limit)"
-echo "  2) 🛑 Bad Image Tag (Triggers ImagePullBackOff)"
-echo "  3) 💽 Missing PVC (Deletes PVC file from Git) - MongoDB Only"
-echo "  4) 🚪 Cancel"
+echo "  1)  Memory Starvation (Triggers OOMKilled - 1Mi Limit)"
+echo "  2)  Bad Image Tag (Triggers ImagePullBackOff)"
+echo "  3)  Missing PVC (Deletes PVC file from Git) - MongoDB Only"
+echo "  4)  Cancel"
 read -p "Select scenario [1-4]: " chaos_choice
 
 # Set default git action to add the modified file
@@ -58,14 +58,14 @@ case $chaos_choice in
             echo -e "\n Error: PVC scenario is only for MongoDB. Exiting."
             exit 1
         fi
-        echo -e "\n 🔥 Wiping PVC definition from $FILE_PATH..."
+        echo -e "\n  Wiping PVC definition from $FILE_PATH..."
         sed -i '/---/,$d' $FILE_PATH
         kubectl delete pvc mongodb-pvc -n chat-app --wait=false 2>/dev/null
-        echo -e "\n 🧹 Force-clearing existing PVC finalizers..."
+        echo -e "\n  Force-clearing existing PVC finalizers..."
         kubectl patch pvc mongodb-pvc -p '{"metadata":{"finalizers":null}}' -n chat-app --type=merge 2>/dev/null
         
         # --- NEW: THE "INSTANT FAILURE" TRIGGER ---
-        echo -e "\n 💀 Killing existing MongoDB Pod to trigger immediate failure..."
+        echo -e "\n  Killing existing MongoDB Pod to trigger immediate failure..."
         kubectl delete pod -l app=mongodb -n chat-app --grace-period=0 --force
         
         COMMIT_MSG="Chaos: Deleted PVC and recycled Pod for AI regeneration"
@@ -75,7 +75,7 @@ case $chaos_choice in
         exit 0
         ;;
     *)
-        echo -e "\n❌ Invalid option. Exiting."
+        echo -e "\n Invalid option. Exiting."
         exit 1
         ;;
 esac
