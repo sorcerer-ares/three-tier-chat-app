@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==========================================
-# 🤖 AIOps GitOps Architecture - Chaos Engine 🤖
+# AIOps GitOps Architecture - Chaos Engine 
 # ==========================================
 
 BRANCH="main"
@@ -58,17 +58,22 @@ case $chaos_choice in
             echo -e "\n Error: PVC scenario is only for MongoDB. Exiting."
             exit 1
         fi
-        echo -e "\n  Wiping PVC definition from $FILE_PATH..."
+        
+        echo -e "\n 🔥 Wiping PVC definition from YAML..."
         sed -i '/---/,$d' $FILE_PATH
+        
+        echo -e "\n 🗑️ Triggering PVC Deletion..."
         kubectl delete pvc mongodb-pvc -n chat-app --wait=false 2>/dev/null
-        echo -e "\n  Force-clearing existing PVC finalizers..."
-        kubectl patch pvc mongodb-pvc -p '{"metadata":{"finalizers":null}}' -n chat-app --type=merge 2>/dev/null
         
-        # --- NEW: THE "INSTANT FAILURE" TRIGGER ---
-        echo -e "\n  Killing existing MongoDB Pod to trigger immediate failure..."
-        kubectl delete pod -l app=mongodb -n chat-app --grace-period=0 --force
-        
-        COMMIT_MSG="Chaos: Deleted PVC and recycled Pod for AI regeneration"
+        # --- THE FIX: Wait a beat and then FORCE patch ---
+        sleep 2 
+        echo -e "\n 🧹 Stripping Finalizers (The Terminator)..."
+        kubectl patch pvc mongodb-pvc -n chat-app -p '{"metadata":{"finalizers":null}}' --type=merge 2>/dev/null
+
+        echo -e "\n 💀 Killing Pod with Force..."
+        kubectl delete pod -l app=mongodb -n chat-app --grace-period=0 --force 2>/dev/null
+
+        COMMIT_MSG="Chaos: Hard-deleted PVC and recycled Pod"
         ;;
     4)
         echo -e "\nExiting safely. No chaos injected."
