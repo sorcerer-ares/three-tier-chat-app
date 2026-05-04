@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: chatapp-backend
-        image: vlawliet/chatapp-backend:latest_BROKEN-DEMO_BROKEN-DEMO
+        image: vlawliet/chatapp-backend:latest
         resources:
           requests:
             memory: "512Mi"
