@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: chatapp-frontend
-        image: vlawliet/chatapp-frontend:latest_BROKEN-DEMO
+        image: vlawliet/chatapp-frontend:latest_BROKEN-DEMO_BROKEN-DEMO
         imagePullPolicy: Always
         resources:
           requests:
