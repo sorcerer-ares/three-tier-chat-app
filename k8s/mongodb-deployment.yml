@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: chatapp-mongodb
-        image: mongo:latest_BROKEN-DEMO
+        image: mongo:latest
         ports:
         - containerPort: 27017
         
