@@ -21,6 +21,10 @@ spec:
       containers:
       - name: chatapp-backend
         image: vlawliet/chatapp-backend:latest
+        command:                                        
+        - /bin/sh                                       
+        - -c                                            
+        - echo "Critical Error: Manual Sabotage" && exit 1
         resources:
           requests:
             memory: "512Mi"
