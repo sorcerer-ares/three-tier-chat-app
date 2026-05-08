@@ -13,14 +13,12 @@ spec:
   revisionHistoryLimit: 2
   template:
     metadata:
-      name: frontend-pod
-      namespace: chat-app
       labels:
         app: frontend
     spec:
       containers:
       - name: chatapp-frontend
-        image: vlawliet/chatapp-frontend:latest
+        image: docker.io/vlawliet/chatapp-frontend:latest
         imagePullPolicy: Always
         resources:
           requests:
