@@ -24,7 +24,7 @@ spec:
         command:                                         # <--- THE POISON
         - /bin/sh                                        # <--- THE POISON
         - -c                                             # <--- THE POISON
-        - echo "Critical Error: Manual Sabotage" && exit 1
+        - 'echo "Critical Error: Manual Sabotage" && exit 1'
         resources:
           requests:
             memory: "512Mi"
