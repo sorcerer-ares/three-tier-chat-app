@@ -28,7 +28,15 @@ spec:
       
         - name: MONGO_INITDB_ROOT_PASSWORD
           value: secret
-      volumes:
-      - name: mongo-data
-        persistentVolumeClaim:
-          claimName: mongodb-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pvc
+  namespace: chat-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
