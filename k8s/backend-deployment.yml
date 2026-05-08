@@ -39,3 +39,13 @@ spec:
           value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
         - name: JWT_SECRET
           value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"
+        - name: MANUAL_SABOTAGE
+          value: "false"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: chat-app
+data:
+  MANUAL_SABOTAGE: "false"
