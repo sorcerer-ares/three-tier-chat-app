@@ -13,8 +13,6 @@ spec:
   revisionHistoryLimit: 2
   template:
     metadata:
-      name: backend-pod
-      namespace: chat-app
       labels:
         app: backend
     spec:
