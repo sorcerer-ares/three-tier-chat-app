@@ -36,6 +36,6 @@ spec:
         - name: PORT
           value: "5001"
         - name: MONGODB_URI
-          value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
+          value: "mongodb://mongoadmin:secret@10.43.86.250:27017/chatApp?authSource=admin"
         - name: JWT_SECRET
           value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"
