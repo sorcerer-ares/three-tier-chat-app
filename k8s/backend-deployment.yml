@@ -21,10 +21,6 @@ spec:
       containers:
       - name: chatapp-backend
         image: vlawliet/chatapp-backend:latest
-        command:                                        
-        - /bin/sh                                       
-        - -c                                            
-        - echo "Critical Error: Manual Sabotage" && exit 1
         resources:
           requests:
             memory: "1Mi"
@@ -40,6 +36,6 @@ spec:
         - name: PORT
           value: "5001"
         - name: MONGODB_URI
-          value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
+          value: "httttp///mongo/mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
         - name: JWT_SECRET
           value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"
