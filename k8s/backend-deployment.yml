@@ -14,7 +14,6 @@ spec:
   template:
     metadata:
       name: backend-pod
-      namespace: chat-app
       labels:
         app: backend
     spec:
@@ -23,10 +22,10 @@ spec:
         image: vlawliet/chatapp-backend:latest
         resources:
           requests:
-            memory: "1Mi"
+            memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "1Mi"
+            memory: "512Mi"
             cpu: "500m"
         ports:
         - containerPort: 5001
@@ -36,6 +35,6 @@ spec:
         - name: PORT
           value: "5001"
         - name: MONGODB_URI
-          value: "httttp///mongo/mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
+          value: "mongodb://mongoadmin:secret@mongodb:27017/chatApp?authSource=admin"
         - name: JWT_SECRET
           value: "X2vbfHs0hPlNjD6mPGuEXSNtxpTYMM9Cu4cCEi1l0zz"
